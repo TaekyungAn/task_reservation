@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../CommonUI/Button";
 import CloseBtn from "../CommonUI/CloseBtn";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -40,6 +41,7 @@ const RightBtn = styled.div`
 `;
 
 function Header() {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <LeftBtn>
@@ -49,6 +51,9 @@ function Header() {
           $fontSize={"1.6rem"}
           $bgcolor={"white"}
           $textcolor={"orange"}
+          onClick={() => {
+            navigate(`/new_res`);
+          }}
         >
           {/* 아이콘 경로 설정 안됨!!! */}
           {/* <img src="../../assets/icons/add.svg" alt="추가 아이콘" /> */}
