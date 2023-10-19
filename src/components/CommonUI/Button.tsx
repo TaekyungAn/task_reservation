@@ -5,9 +5,10 @@ const ButtonContainer = styled.button<IButton>`
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
   font-size: ${({ $fontSize }) => $fontSize};
-  color: ${({ $textcolor }) => ($textcolor === "white" ? "white" : "#E5511C")};
+  color: ${({ $textcolor }) =>
+    $textcolor === "white" ? "white" : "orange" ? "#EC551F" : "black"};
   background-color: ${({ $bgcolor }) =>
-    $bgcolor === "white" ? "white" : "#E5511C"};
+    $bgcolor === "white" ? "white" : "#EC551F"};
 `;
 
 interface IButton extends React.HTMLAttributes<HTMLElement> {
@@ -18,7 +19,7 @@ interface IButton extends React.HTMLAttributes<HTMLElement> {
   $fontSize?: string;
   children: React.ReactNode;
 }
-type ButtonColor = "orange" | "white";
+type ButtonColor = "orange" | "white" | "black";
 
 function Button({
   children,

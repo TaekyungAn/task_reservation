@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Header from "../components/Home/Header";
 import Card from "../components/Home/Card";
+import { IDummyList, dummyList } from "../data/datalist";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const HomeContainer = styled.header`
   background-color: ${(props) => props.theme.gray.home_background};
@@ -21,15 +24,25 @@ const Cards = styled.div`
 `;
 
 function Home() {
+  const location = useLocation();
+  const resInfo = { ...location.state };
+  console.log(resInfo);
+
+  // console.log("home", resInfo);
+  // useEffect(() => {
+  //   setData([resInfo, ...data]);
+  // }, []);
+
   return (
     <HomeContainer>
       <Header />
+
       <Cards>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {resInfo.length > 0
+          ? resInfo.map((item: IDummyList) => {
+              return <Card key={item.id} {...item} />;
+            })
+          : "새로운 예약이 없습니다"}
       </Cards>
     </HomeContainer>
   );
