@@ -26,7 +26,7 @@ function Card({
     console.log("clicked");
 
     if (window.confirm(`${name}의 내용을 수정하시겠습니까?`)) {
-      navigate("/edit_res");
+      navigate(`/edit_res/${id}`);
     }
   };
 
