@@ -1,17 +1,21 @@
 import * as S from "./styles/NewRes.styled";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IDummyList, dummyList } from "../data/datalist";
 import { RHeader } from "../components/Reservation";
 import { CButton, CIcon } from "../components/CommonUI";
+import { ResDispatchContext } from "../reducer";
 
 function NewRes() {
+  const { onCreate } = useContext(ResDispatchContext);
+
   const navigate = useNavigate();
   const [state, setState] = useState({
     name: "",
     phone: "",
     reserved_date: 0,
     reserved_time: 0,
+    created_date: new Date().toLocaleDateString(),
     guests: 0,
     table: 0,
     note: "",
@@ -50,34 +54,10 @@ function NewRes() {
 
   const dataId = useRef(0);
   const [data, setData] = useState<IDummyList[]>([...dummyList]);
-  const onCreate = ({
-    name,
-    phone,
-    guests,
-    table,
-    note,
-    reserved_date,
-    reserved_time,
-  }: IDummyList) => {
-    const created_date = new Date().getTime();
-    const newItem = {
-      id: dataId.current++,
-      name,
-      phone,
-      guests,
-      table,
-      note,
-      created_date,
-      reserved_date,
-      reserved_time,
-    };
-    setData([newItem, ...data]);
-  };
 
   // 폼 제출
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(state);
     if (state.name.length < 1) {
       nameInput.current?.focus();
       return;
@@ -91,18 +71,17 @@ function NewRes() {
       return;
     }
     if (window.confirm("예약을 완료하시겠습니까?")) {
-      onCreate({
-        name: state.name,
-        guests: state.guests,
-        phone: state.phone,
-        table: state.table,
-        note: state.note,
-        reserved_date: "Today",
-        reserved_time: 0,
-      });
-      console.log(data);
-
-      navigate("/", { state: { data } });
+      onCreate(
+        state.created_date,
+        state.name,
+        state.phone,
+        state.guests,
+        state.note,
+        state.table,
+        state.reserved_date,
+        state.reserved_time
+      );
+      navigate("/");
     }
   };
 
