@@ -1,8 +1,12 @@
 import * as S from "./styles/Card.styled";
 import { CButton, CIcon } from "../CommonUI";
 import { IDummyList } from "../../data/datalist";
+import { useContext } from "react";
+import { ResDispatchContext } from "../../reducer";
+import { useNavigate } from "react-router-dom";
 
 function Card({
+  id,
   name,
   guests,
   note,
@@ -11,6 +15,21 @@ function Card({
   reserved_time,
   table,
 }: IDummyList) {
+  const { onRemove } = useContext(ResDispatchContext);
+  const navigate = useNavigate();
+  const handleRemove = () => {
+    if (window.confirm(`${name}손님을 정말 삭제하시겠습니까?`)) {
+      onRemove(id);
+    }
+  };
+  const handleEdit = () => {
+    console.log("clicked");
+
+    if (window.confirm(`${name}의 내용을 수정하시겠습니까?`)) {
+      navigate("/edit_res");
+    }
+  };
+
   return (
     <S.CardContainer>
       <S.Information>
@@ -33,7 +52,7 @@ function Card({
         <S.TableInfo>
           <span>Reserved Table</span> {table} . <span> Floor 1</span>
         </S.TableInfo>
-        <S.AdttionalInfo>
+        <S.AdttionalInfo onClick={handleEdit}>
           {note}
           <CIcon $name={"edit"} />
         </S.AdttionalInfo>
@@ -44,6 +63,7 @@ function Card({
           $bgcolor={"white"}
           $textcolor={"orange"}
           style={{ flexShrink: 0 }}
+          onClick={handleRemove}
         >
           <CIcon $name={"trash"} />
         </CButton>
