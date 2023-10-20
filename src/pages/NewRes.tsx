@@ -1,57 +1,9 @@
-import styled from "styled-components";
-import ResHeader from "../components/Reservation/ResHeader";
-import Button from "../components/CommonUI/Button";
+import * as S from "./styles/NewRes.styled";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Icon from "../components/CommonUI/Icon";
 import { IDummyList, dummyList } from "../data/datalist";
-
-const NewResContainer = styled.header`
-  background-color: ${(props) => props.theme.gray.home_background};
-  width: 100%;
-  height: 100%;
-  min-height: 30rem;
-  border-radius: 1.1rem;
-  overflow: scroll;
-  font-size: 1.6rem;
-`;
-const Information = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 3rem;
-
-  & > div {
-    margin-bottom: 3rem;
-  }
-`;
-const PersonalInfo = styled.div`
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  justify-content: space-between;
-  > input {
-    height: 6rem;
-    flex-grow: 1;
-    border-radius: 1rem;
-    border: 1px gray solid;
-  }
-`;
-const DateInfo = styled.div``;
-const PartyInfo = styled.div`
-  display: flex;
-`;
-const GuestesNumber = styled.div`
-  display: flex;
-  & > .num {
-    font-size: 3.2rem;
-  }
-`;
-const TableInfo = styled.div``;
-const AdttionalInfo = styled.div`
-  & textarea {
-    height: 18rem;
-  }
-`;
+import { RHeader } from "../components/Reservation";
+import { CButton, CIcon } from "../components/CommonUI";
 
 function NewRes() {
   const navigate = useNavigate();
@@ -109,7 +61,7 @@ function NewRes() {
   }: IDummyList) => {
     const created_date = new Date().getTime();
     const newItem = {
-      id: dataId.current,
+      id: dataId.current++,
       name,
       phone,
       guests,
@@ -119,7 +71,6 @@ function NewRes() {
       reserved_date,
       reserved_time,
     };
-    dataId.current += 1;
     setData([newItem, ...data]);
   };
 
@@ -156,10 +107,10 @@ function NewRes() {
   };
 
   return (
-    <NewResContainer className="NewRes">
-      <ResHeader />
-      <Information>
-        <PersonalInfo>
+    <S.NewResContainer className="NewRes">
+      <RHeader />
+      <S.Information>
+        <S.PersonalInfo>
           <input
             placeholder="Name"
             name="name"
@@ -174,24 +125,24 @@ function NewRes() {
             onChange={handleChangeState}
             ref={phoneInput}
           />
-          <Button $width={"25rem"} $bgcolor={"white"} $textcolor={"black"}>
-            <Icon $name={"event_available"} />
+          <CButton $width={"25rem"} $bgcolor={"white"} $textcolor={"black"}>
+            <CIcon $name={"event_available"} />
             Select Date
-          </Button>
-        </PersonalInfo>
-        <PartyInfo>
-          <GuestesNumber>
+          </CButton>
+        </S.PersonalInfo>
+        <S.PartyInfo>
+          <S.GuestesNumber>
             <span>Guests</span>
-            <Button
+            <CButton
               $width={"5rem"}
               $bgcolor={"white"}
               $textcolor={"black"}
               onClick={handleDecrease}
             >
-              <Icon $name={"math-minus"} />
-            </Button>
+              <CIcon $name={"math-minus"} />
+            </CButton>
             <span className="num">{guestNum}</span>
-            <Button
+            <CButton
               $width={"5rem"}
               $bgcolor={"white"}
               $textcolor={"black"}
@@ -200,10 +151,10 @@ function NewRes() {
                 setGeustNum((prev) => prev + 1);
               }}
             >
-              <Icon $name={"math-plus"} />
-            </Button>
-          </GuestesNumber>
-          <TableInfo>
+              <CIcon $name={"math-plus"} />
+            </CButton>
+          </S.GuestesNumber>
+          <S.TableInfo>
             <select
               name="table"
               value={state.table}
@@ -217,17 +168,17 @@ function NewRes() {
                 );
               })}
             </select>
-          </TableInfo>
-        </PartyInfo>
-        <AdttionalInfo>
+          </S.TableInfo>
+        </S.PartyInfo>
+        <S.AdttionalInfo>
           <textarea
             placeholder="memo"
             value={state.note}
             name="note"
             onChange={handleChangeState}
           />
-        </AdttionalInfo>
-        <Button
+        </S.AdttionalInfo>
+        <CButton
           $height={"7rem"}
           $width={"100%"}
           $bgcolor={"orange"}
@@ -235,9 +186,9 @@ function NewRes() {
           onClick={handleSubmit}
         >
           Save
-        </Button>
-      </Information>
-    </NewResContainer>
+        </CButton>
+      </S.Information>
+    </S.NewResContainer>
   );
 }
 

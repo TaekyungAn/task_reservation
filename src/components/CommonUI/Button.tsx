@@ -1,25 +1,5 @@
-import styled from "styled-components";
-
-const ButtonContainer = styled.button<IButton>`
-  /* props 스타일 */
-  width: ${({ $width }) => $width};
-  height: ${({ $height }) => $height};
-  font-size: ${({ $fontSize }) => $fontSize};
-  color: ${({ $textcolor }) =>
-    $textcolor === "white" ? "white" : "orange" ? "#EC551F" : "black"};
-  background-color: ${({ $bgcolor }) =>
-    $bgcolor === "white" ? "white" : "#EC551F"};
-`;
-
-interface IButton extends React.HTMLAttributes<HTMLElement> {
-  $width: string;
-  $height?: string;
-  $bgcolor: ButtonColor;
-  $textcolor: ButtonColor;
-  $fontSize?: string;
-  children: React.ReactNode;
-}
-type ButtonColor = "orange" | "white" | "black";
+import * as S from "./styles/Button.styled";
+import { IButton } from "./types/Button.type";
 
 function Button({
   children,
@@ -31,7 +11,7 @@ function Button({
   ...otherProps
 }: IButton) {
   return (
-    <ButtonContainer
+    <S.ButtonContainer
       $width={$width}
       $height={$height}
       $bgcolor={$bgcolor}
@@ -40,7 +20,7 @@ function Button({
       {...otherProps}
     >
       {children}
-    </ButtonContainer>
+    </S.ButtonContainer>
   );
 }
 

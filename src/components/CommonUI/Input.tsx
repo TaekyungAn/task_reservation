@@ -1,17 +1,5 @@
-import styled from "styled-components";
-
-const InputContainer = styled.input<IInput>`
-  /* props 스타일 */
-  width: ${({ $width }) => $width};
-  height: ${({ $height }) => $height};
-`;
-
-interface IInput extends React.HTMLAttributes<HTMLElement> {
-  $width: string;
-  $height?: string;
-  placeholder?: string;
-  children: React.ReactNode;
-}
+import * as S from "./styles/Input.styled";
+import { IInput } from "./types/Input.type";
 
 function Input({
   placeholder,
@@ -22,14 +10,14 @@ function Input({
 }: IInput) {
   return (
     <>
-      <InputContainer
+      <S.InputContainer
         $width={$width}
         $height={$height}
         placeholder={placeholder}
         {...otherProps}
       >
         {children}
-      </InputContainer>
+      </S.InputContainer>
     </>
   );
 }
