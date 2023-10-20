@@ -15,7 +15,7 @@ const reducer = (state: any, action: Action) => {
   let newState = [];
   switch (action.type) {
     case "INIT": {
-      return action.type;
+      return action.data;
     }
     case "CREATE": {
       newState = [action.data, ...state];
@@ -37,11 +37,11 @@ const reducer = (state: any, action: Action) => {
     default:
       return state;
   }
-  localStorage.setItem("diary", JSON.stringify(newState));
+  localStorage.setItem("guestList", JSON.stringify(newState));
   return newState;
 };
 
 export default reducer;
 
-export const ResStateContext = createContext<IDummyList | null>(null);
+export const ResStateContext = createContext<any | null>(null);
 export const ResDispatchContext = createContext<any | null>(null);
