@@ -2,7 +2,11 @@ import * as S from "./styles/ResHeader.styled";
 import { CButton, CIcon } from "../CommonUI";
 import { useNavigate } from "react-router-dom";
 
-function ResHeader() {
+interface IResHeader {
+  children: React.ReactNode;
+}
+
+function ResHeader({ children }: IResHeader) {
   const navigate = useNavigate();
   return (
     <S.ResHeaderContainer>
@@ -19,7 +23,7 @@ function ResHeader() {
           <CIcon $name="keyboard_backspace" />
         </CButton>
       </S.LeftBtn>
-      <span>New Reservation</span>
+      <span>{children}</span>
       <S.RightBtn>
         <CIcon $name="close" />
       </S.RightBtn>
