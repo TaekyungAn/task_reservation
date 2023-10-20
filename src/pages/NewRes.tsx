@@ -1,7 +1,6 @@
 import * as S from "./styles/NewRes.styled";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IDummyList, dummyList } from "../data/datalist";
 import { RHeader } from "../components/Reservation";
 import { CButton, CIcon } from "../components/CommonUI";
 import { ResDispatchContext } from "../reducer";
@@ -52,9 +51,6 @@ function NewRes() {
     });
   };
 
-  const dataId = useRef(0);
-  const [data, setData] = useState<IDummyList[]>([...dummyList]);
-
   // 폼 제출
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -87,7 +83,7 @@ function NewRes() {
 
   return (
     <S.NewResContainer className="NewRes">
-      <RHeader />
+      <RHeader>New Reservation</RHeader>
       <S.Information>
         <S.PersonalInfo>
           <input
