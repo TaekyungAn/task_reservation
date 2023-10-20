@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as S from "./styles/App.styled";
 import { PEditRes, PNewRes, PHome } from "./pages";
 import reducer, { ResDispatchContext, ResStateContext } from "./reducer";
-import { IDummyList } from "./data/datalist";
+import { IDummyList, dummyList } from "./data/datalist";
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, [...dummyList]);
 
   useEffect(() => {
     const localData = localStorage.getItem("diary");
@@ -25,30 +25,28 @@ function App() {
     }
   }, []);
 
-  const dataId = useRef(0);
+  const dataId = useRef(6);
   // CREATE
   const onCreate = (
     date: number,
-    {
-      phone,
-      guests,
-      note,
-      table,
-      name,
-      reserved_date,
-      reserved_time,
-    }: IDummyList
+    name: string,
+    phone: string,
+    guests: number,
+    note: string,
+    table: number,
+    reserved_date: string | number,
+    reserved_time: string | number
   ) => {
     dispatch({
       type: "CREATE",
       data: {
         id: dataId.current++,
-        created_date: new Date(date).getTime(),
-        phone,
-        guests,
-        note,
-        table,
         name,
+        guests,
+        phone,
+        table,
+        note,
+        created_date: new Date(date).getTime(),
         reserved_date,
         reserved_time,
       },
@@ -64,15 +62,13 @@ function App() {
   const onEdit = (
     targetId: number,
     date: number,
-    {
-      phone,
-      guests,
-      note,
-      table,
-      name,
-      reserved_date,
-      reserved_time,
-    }: IDummyList
+    name: string,
+    phone: string,
+    guests: number,
+    note: string,
+    table: number,
+    reserved_date: string | number,
+    reserved_time: string | number
   ) => {
     dispatch({
       type: "EDIT",
@@ -97,7 +93,7 @@ function App() {
             <Routes>
               <Route path="/" element={<PHome />} />
               <Route path="/new_res" element={<PNewRes />} />
-              <Route path="/edit_res" element={<PEditRes />} />
+              <Route path="/edit_res/:id" element={<PEditRes />} />
             </Routes>
           </BrowserRouter>
         </S.AppContainer>
